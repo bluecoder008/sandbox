@@ -1,0 +1,4 @@
+are 2
+hello 10
+how 1
+you 2

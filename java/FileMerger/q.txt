@@ -1,0 +1,12 @@
+
+Q: Given N files (large and the contents of which can not be loaded into memory), each file has a sequence of lines, with the following properties:
+
+   - a Key (String), and a value (Integer)
+   - Keys are sorted
+   - no duplicate keys
+
+Write a program to read from these files and write to a result file with a line
+for each key with value being the sum of all values in the files (if the key is not present in a file, the value is assumed to be 0)
+ 
+
+
