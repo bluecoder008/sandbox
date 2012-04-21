@@ -1,0 +1,5 @@
+hello 10
+good 1
+morning 4
+world 5
+xen 100

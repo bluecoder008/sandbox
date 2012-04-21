@@ -1,0 +1,5 @@
+are 10
+how 1
+going 4
+great 10
+things 10
