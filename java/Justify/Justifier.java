@@ -14,43 +14,26 @@ class Justifier
             String word = stknz.nextToken();
             int len = ( count == 0 ? word.length() : 1 + word.length() );
 
-            if ( count + len <= width ) {
-                count += len;
-                wordList.add(word);
-            } else {
-                String[] spaces = computeSpaces(wordList, width);
-                System.out.print("'");
-                for(int n = 0; n < wordList.size(); n++) {
-                    if ( n > 0 ) {
-                        System.out.print(spaces[n-1]);
-                    }
-                    System.out.print(wordList.get(n));
-                }
-                System.out.println("'");
-                count = word.length();
+            if ( count + len > width ) {
+
+                printWordList( wordList, width, false);
+                count = 0;
+                len--;
                 wordList.clear();
-                wordList.add(word);
             }
+
+            count += len;
+            wordList.add(word);
         }
-     System.out.print("'");
-     for(int n = 0; n < wordList.size(); n++) {
-         if ( n > 0 ) {
-             System.out.print(" ");
-         }
-         System.out.print(wordList.get(n));
-      }
-      System.out.println("'");
+        printWordList( wordList, width, true);
     }
 
     private String[] computeSpaces(List<String> words,
-                                   int width)
+                                   int width,
+                                   boolean singlespace
+                                   )
     {
-        String[] spaces = new String[words.size() - 1];
-
-        if ( words.size() == 1 ) {
-            return spaces;
-        }
-
+        String[] spaces = new String[words.size()];
         for(int n=0; n < spaces.length; n++) {
             spaces[n] = new String();
         }
@@ -60,16 +43,28 @@ class Justifier
             sum += words.get(n).length();
         }
         int numSpaces = width - sum;
-        while( numSpaces > 0 ) {
-            for(int n = 0; n < spaces.length && (numSpaces > 0); n++) {
-                spaces[n] = spaces[n] + " ";
-                numSpaces--;
+        for(int n = 1; n < spaces.length && (numSpaces > 0); n++) {
+            if ( singlespace ) {
+               spaces[n] = " ";
+            } else {
+               spaces[n] = spaces[n] + " ";
             }
+            numSpaces--;
         }
-        // for(String space : spaces) {
-        //    System.out.println("space => '" + space + "'" );
-        // }
         return spaces;
+    }
+
+    private void printWordList(List<String> words, 
+                                        int width,
+                                    boolean singlespace)
+    {
+        String[] spaces = computeSpaces(words, width, singlespace);
+        System.out.print("'");
+        for(int n = 0; n < words.size(); n++) {
+            System.out.print(spaces[n]);
+            System.out.print(words.get(n));
+        }
+        System.out.println("'");
     }
 
 
