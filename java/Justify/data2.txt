@@ -1,0 +1,2 @@
+This is some sample text, really just enough to generate a few lines in the
+ output to show what the text justify function is supposed to do.
