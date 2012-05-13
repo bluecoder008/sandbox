@@ -11,18 +11,19 @@ public class Singleton {
             System.out.println( "ts1=" + new Date().toString() );
         }
 
-        // Private constructor prevents instantiation from other classes
+        // Private constructor prevents instantiation from other classes  <-- keypoint 0
         private Singleton() { 
         }
  
-        private static class SingletonHolder {  
-
+        // Use helper static class to hold instance <-- keypoint 1 (lazy loading)
+        private static class SingletonHolder {
             static {
                   System.out.println( "ts2=" + new Date().toString() );
             }
             public static final Singleton instance = new Singleton();
         }
  
+        // static getInstance method returns instance wrapped <-- keypoint 2
         public static Singleton getInstance() {
                 return SingletonHolder.instance;
         }
