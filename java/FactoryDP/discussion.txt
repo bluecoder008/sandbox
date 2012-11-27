@@ -1,0 +1,35 @@
+
+advantages of Factory DP
+------------------------
+
+o De-coupling - of calling class and target classes:
+
+  -> JDBC, we dont need to know the target datasources are using what type of
+     database technologies, as long as they are supported in terms of the Abstract
+     classes/interfaces such as Connection, Statement etc.
+
+  -> For this example, we dont need to know what the specific PDF printer, Home or office 
+     printers are, all we need is the kind of printer that can do the right job, and it may
+     vary from computer to computer, environment to environment, but it does not matter the
+     same DP still applies
+
+o Dynamic Extensibility 
+
+  -> The Factory Method pattern also makes programs dynamically extensible at runtime. 
+     New concrete subclasses can be added to the system without recompiling the existing code.
+     (GOF Patterns)
+
+o Parallel Hierarchy
+  
+  -> The Factory methods also help in user cases where parallel class hierarchies are needed 
+     A parallel class hierarchy is where every Product object also requires one or more 
+     additional objects created (e.g. each Manager object also needs a Team object created, which
+     also contain team members at least).
+     (GOF Patterns)
+
+disadvantages of Factory DP
+---------------------------
+
+  -> Bloat the number of classes, since each concrete class requires a creator class.
+
+
