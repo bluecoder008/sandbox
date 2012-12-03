@@ -16,7 +16,7 @@ class Justifier
 
             if ( count + len > width ) {
 
-                printWordList( wordList, width, false);
+                printOneLine( wordList, width, false);
                 count = 0;
                 len--;
                 wordList.clear();
@@ -25,7 +25,7 @@ class Justifier
             count += len;
             wordList.add(word);
         }
-        printWordList( wordList, width, true);
+        printOneLine( wordList, width, true);
     }
 
     private String[] computeSpaces(List<String> words,
@@ -54,7 +54,7 @@ class Justifier
         return spaces;
     }
 
-    private void printWordList(List<String> words, 
+    private void printOneLine(List<String> words, 
                                         int width,
                                     boolean singlespace)
     {
@@ -73,7 +73,7 @@ class Justifier
         StringBuilder sb = new StringBuilder();
         String str_Text = null;
 
-        int num = Integer.parseInt(args[0]);
+        int lineWidth = Integer.parseInt(args[0]);
 
         String fileName = args[1];
 
@@ -91,7 +91,7 @@ class Justifier
 
             Justifier just = new Justifier();
 
-            just.justify(num, str_Text);
+            just.justify(lineWidth, str_Text);
 
         } catch (java.io.FileNotFoundException ex) {
                 // This should not happen
