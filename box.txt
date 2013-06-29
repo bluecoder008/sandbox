@@ -1,0 +1,92 @@
+﻿Load Balancer
+       /        |        \
+      /         |         \
+App Server  App Server   App Server ------->  Cache
+      \         |         /
+       \        |        /
+            Database              
+
+
+
+
+Data Schema:
+
+
+Folder Table
+folder_id:
+name:
+owner:
+...
+
+
+
+
+
+
+File Table
+file_id:
+folder_id:
+name:
+...
+
+
+Cache:
+V = get(K)
+set(K,V)
+
+
+K -> V
+Z -> {A, B}
+
+
+Z: A, B + C   // Z has two files: A, B. User is uploading new file C to the same folder.
+1. Look up folder Z from folder table
+2. Invalid Z files from Cache
+3. Insert C into DB
+4. Read files in Z from DB
+5. Save Z.files to Cache
+
+
+
+
+Z: A, B + C                                                            Z: A, B + D
+1. Look up folder Z from folder table        1. Look up folder Z from folder table
+2. Invalid Z.files from Cache                         2. Invalid Z.files from Cache
+3. Insert C into DB                                         3. Insert D into DB
+4. Read files in Z from DB                                 4. Read files in Z from DB
+5. Save Z.files to Cache                                 5. Save Z.files to Cache
+
+
+class DBModule {
+     static List<File> lookupFolder(String folder_name);
+     static void insert(String file, String to_folder);
+};
+
+
+class CacheModule {
+     static void invalidate(String key);
+     static void saveValue(String key, Object Value);
+}
+
+
+DBCacheModule {
+
+
+    static void readFromDBAndSaveToCache(String Z) {
+         Lock();
+         List<File> files = DBModule.lookupFolder(Z);
+         CacheModule.insert(Z, files);
+         UnLock();
+   }
+
+
+}
+
+
+List<File> fileList = DBModule.lookupFolder(Z);
+CacheModule.invalidate(Z);
+DBModule.insert(C, Z)
+DBCacheModule.readFromDBAndSaveToCache(Z);
+
+
+When both requests finish, can the memcache have data different from the database?
