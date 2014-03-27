@@ -20,7 +20,7 @@ class ArraysIntersect<T> {
                  ret.add(t);
              }
          }
-         return (T[])(ret.toArray());
+         return ret.toArray(array12);
      }
 
      static public void main(String[] args) {
@@ -36,7 +36,8 @@ class ArraysIntersect<T> {
          System.out.println("intersect: ");
 
          for( String str : product ) {
-             System.out.println("=>" + str );
+	     if ( str != null )
+                 System.out.println("=>" + str );
          }
      }
 
