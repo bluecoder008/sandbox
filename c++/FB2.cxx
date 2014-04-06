@@ -1,6 +1,12 @@
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <cstdlib>
+
+/*
+ * Patch: Fix up test case:
+ *    1111111111199 2 
+ */
 
 std::string convert(std::string& str)
 {
@@ -15,7 +21,10 @@ std::string convert(std::string& str)
         if ( index < slen && str[index] == ch ) {
             count++;
         } else {
-            ret += '0' + count;
+            //ret += '0' + count;
+	    std::stringstream ss;
+            ss << count;
+            ret += ss.str();
             ret += ch;
             count = 1;
        }
