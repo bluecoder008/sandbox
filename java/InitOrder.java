@@ -23,3 +23,13 @@ public class InitOrder {
 
     }
 }
+
+/**
+  * Execution order:
+  *
+  *   NON-STATIC BLOCK
+  *   MAIN CONSTRUCTOR
+  *   STATIC BLOCK
+  *   MAIN METHOD 
+  *
+  */
