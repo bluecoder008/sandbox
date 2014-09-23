@@ -60,9 +60,9 @@ class AWSResourceManager(ResourceManager) :
 				raise
 	
 		reservation = self.connection.run_instances(ec2_ami,
-										key_name=ec2_key_pair,
-										instance_type=ec2_instancetype, 
-										security_groups=[group])
+							key_name=ec2_key_pair,
+							instance_type=ec2_instancetype, 
+							security_groups=[group])
 			
 		instance = reservation.instances[0]
 		conn.create_tags([instance.id], {"Name":ec2_tag})
