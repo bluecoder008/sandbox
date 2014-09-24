@@ -36,14 +36,14 @@ class AWSResourceManager(ResourceManager) :
 		and the tag,
 		returns the new instance. 
 		"""
-		print "... creating EC2 instance ..."
+		msg("... creating EC2 instance ...")
 	
 		try:
 			group= self.connection.get_all_security_groups(groupnames=[ec2_group])[0]
-			print " Security Groups: %s " % group 
+			msg( " Security Groups: %s " % group )
 		except conn.ResponseError, e:
 			if e.code == 'InvalidGroup.Notfound':			
-				print 'Creating Security Group: %s ' % ec2_group
+				msg( 'Creating Security Group: %s ' % ec2_group )
 				group = self.connection.create_security_group(ec2_group)
 			else:
 				raise
@@ -53,7 +53,7 @@ class AWSResourceManager(ResourceManager) :
 		except conn.ResponseError, e:
 			if e.code == 'InvalidKeyPair.NotFound':
 				key_dir = '~/.ssh'
-				print ' Creating a new key pair and save it to %s' % key_dir
+				msg( ' Creating a new key pair and save it to %s' % key_dir )
 				key = self.connection.create_key_pair(ec2_key_pair)
 				key.save(key_dir)
 			else:
@@ -68,13 +68,13 @@ class AWSResourceManager(ResourceManager) :
 		conn.create_tags([instance.id], {"Name":ec2_tag})
 
 		while instance.state  == u'pending':
-			print "Instance state: %s" % instance.state
+			msg( "Instance state: %s" % instance.state )
 			time.sleep(10)
 			instance.update()
 
-		print "Instance.ID: %s: " % instance.id 
-		print "Instance state: %s " % instance.state
-		print "Public DNS: %s" % instance.public_dns_name
+		msg( "Instance.ID: %s: " % instance.id )
+		msg( "Instance state: %s " % instance.state )
+		msg( "Public DNS: %s" % instance.public_dns_name )
 
 		return instance
 
@@ -82,14 +82,14 @@ class AWSResourceManager(ResourceManager) :
 		"""
 		stop EC2 instance with given ID 
 		"""
-		print "... stopping EC2 instance ..."
+		msg( "... stopping EC2 instance ..." )
 		self.connection.stop_instances(instance_ids=[instance_id])
 
 	def terminate_instance(instance_id):
 		"""
 		terminate EC2 instance with given ID
 		"""
-		print "... terminating EC2 instance ..."
+		msg( "... terminating EC2 instance ..." )
 		self.connection.terminate_instances(instance_ids=[instance_id])
 
 class AWSConnectionFactory :
