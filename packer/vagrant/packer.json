@@ -3,7 +3,7 @@
     {
       "type": "shell",
       "scripts": [
-        "scripts/setup.sh", "scripts/root_setup.sh", "packer_prov_vagrant.sh"
+        "scripts/setup.sh", "scripts/root_setup.sh"
       ],
       "override": {
         "virtualbox-iso": {
