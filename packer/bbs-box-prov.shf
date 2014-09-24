@@ -1,0 +1,21 @@
+
+mkdir -p $HOME/ws 
+
+#exec > $HOME/ws/bbs_bootstrap.log 2>&1
+
+sudo mkdir -p /opt/bbs/
+cd $HOME/ws && svn co --username bluecoder008 --password '{{ThePassword}}' --no-auth-cache  http://bluestorm.unfuddle.com/svn/bluestorm_file-less bluestorm_file-less 
+cd $HOME/ws/bluestorm_file-less && make
+cd $HOME/ws/bluestorm_file-less/_misc/perfmon/blueeye && sudo ant install
+sudo cp $HOME/ws/bluestorm_file-less/bluestorm /opt/bbs
+
+sudo useradd bbs
+sudo chown -R bbs:bbs /opt/bbs
+
+echo "export JAVA_HOME=$JAVA_HOME" | sudo tee -a $RC_LOCAL
+echo "cd /opt/bbs/blueeye && ./run.sh" | sudo tee -a $RC_LOCAL
+echo "/opt/bbs/bluestorm -p 12345" | sudo tee -a  $RC_LOCAL
+echo "exit 0" | sudo tee -a $RC_LOCAL
+
+sudo rm -rf $HOME/ws/bluestorm_file-less
+
