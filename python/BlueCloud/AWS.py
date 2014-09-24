@@ -78,14 +78,14 @@ class AWSResourceManager(ResourceManager) :
 
 		return instance
 
-	def stop_instance(instance_id):
+	def stop_instance(self, instance_id):
 		"""
 		stop EC2 instance with given ID 
 		"""
 		msg( "... stopping EC2 instance ..." )
 		self.connection.stop_instances(instance_ids=[instance_id])
 
-	def terminate_instance(instance_id):
+	def terminate_instance(self, instance_id):
 		"""
 		terminate EC2 instance with given ID
 		"""
