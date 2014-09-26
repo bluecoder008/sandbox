@@ -5,7 +5,7 @@ from ResourceManager import ResourceManager
 from BaseUtil import msg
 from BaseUtil import os_cmd
 from BaseUtil import ssh_cmd
-import time
+import BaseDatetime
 
 class AWSResourceManager(ResourceManager) :
 
@@ -24,7 +24,8 @@ class AWSResourceManager(ResourceManager) :
         		    host = inst.public_dns_name
 			    if not host  :
 				host = inst.ip_address
-			    instances.append(host)
+			    if host :
+			        instances.append(host)
 		return instances
 
 	def launch_instance(self, ec2_ami, ec2_group, ec2_key_pair, ec2_tag):
@@ -69,7 +70,7 @@ class AWSResourceManager(ResourceManager) :
 
 		while instance.state  == u'pending':
 			msg( "Instance state: %s" % instance.state )
-			time.sleep(10)
+			BaseDatetime.sleep(10)
 			instance.update()
 
 		msg( "Instance.ID: %s: " % instance.id )
@@ -78,12 +79,38 @@ class AWSResourceManager(ResourceManager) :
 
 		return instance
 
+	def start_instance(self, instance_id):
+		"""
+		start EC2 instance with given ID 
+		"""
+		msg( "... starting EC2 instance " + instance_id + " ..." )
+		self.connection.start_instances(instance_ids=[instance_id])
+		self.wait_for_instance(instance_id, "running")
+
 	def stop_instance(self, instance_id):
 		"""
 		stop EC2 instance with given ID 
 		"""
-		msg( "... stopping EC2 instance ..." )
+		msg( "... stopping EC2 instance " + instance_id + " ..." )
 		self.connection.stop_instances(instance_ids=[instance_id])
+		self.wait_for_instance(instance_id, "stopped")
+
+	def wait_for_instance(self, instance_id, state):
+		"""
+		wait for EC2 instance to reach a state
+		"""
+		msg( "... waiting EC2 instance " + instance_id + " to be in " + state + " state ..." )
+		reached = False
+		while not reached:
+			insts = self.connection.get_all_instances([instance_id])
+			for res in insts :
+				inst = res.instances[0]
+				msg( "... current state: " + inst.state )
+				if inst.state == state :
+					reached = True
+					break
+			if not reached:
+				BaseDatetime.sleep(10)
 
 	def terminate_instance(self, instance_id):
 		"""
