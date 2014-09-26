@@ -3,11 +3,12 @@
 import sys
 import unittest
 from AWS import AWSResourceManager
+from BaseUtil import msg
 
 class AWSResourceManager_test(unittest.TestCase):
 	
     def setUp(self):
-	self.mgr = AWSResourceManager('us-west-2') #oregon
+	self.mgr = AWSResourceManager('us-east-1') # east coast
 
     def tearDown(self):
         pass
@@ -16,7 +17,18 @@ class AWSResourceManager_test(unittest.TestCase):
 	vm_list = self.mgr.get_instance_list()
 	print "%d instances" % len(vm_list)
 	for inst in vm_list :
-		print "\tvm inst: " + inst	
+		if inst:
+			msg("\tinst: " + inst)
+		else:
+			msg("\tinst: <null>")
+
+    def test_stop_instance(self):
+	self.mgr.stop_instance("i-5b4ff1b5")
+	pass
+
+    def test_start_instance(self):
+	self.mgr.start_instance("i-5b4ff1b5")
+	pass
 
     def test_get_instance_list_key_name(self):
 	vm_list = self.mgr.get_instance_list(key_name='bogus')
