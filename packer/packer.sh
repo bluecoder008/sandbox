@@ -50,8 +50,14 @@ if [ "$PROVIDER" = "vagrant" ]; then
    rm -rf "VirtualBox VMs/packer-virtualbox-iso/packer-virtualbox-iso.vbox" || true
    rm -rf vagrant/output-virtualbox-iso ||   true
    rm -f vagrant/packer/packer_virtualbox_virtualbox.box || true
-   cd vagrant &&  packer build -only=virtualbox-iso -force packer.json
-   #vagrant box remove vagrant_ubuntu || true
-   vagrant box add -f vagrant_ubuntu packer_virtualbox-iso_virtualbox.box
+   if [ "$VM_TYPE" = "ubuntu" ]; then
+		cd vagrant &&  packer build -only=virtualbox-iso -force packer_ubuntu.json
+		#vagrant box remove vagrant_ubuntu || true
+ 	    vagrant box add -f vagrant_ubuntu packer_ubuntu_virtualbox.box
+   elif [ "$VM_TYPE" = "centos" ]; then
+		cd vagrant && packer build -only=virtualbox-iso -force packer_centos.json
+		#vagrant box remove vagrant_centos || true
+   		vagrant box add -f vagrant_centos packer_centos_virtualbox.box
+	fi
    cd -   
 fi
