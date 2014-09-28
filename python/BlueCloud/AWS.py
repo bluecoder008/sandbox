@@ -3,6 +3,7 @@ import boto.ec2
 import boto.ses
 from ResourceManager import ResourceManager
 from BaseUtil import msg
+from BaseUtil import debug_msg
 from BaseUtil import os_cmd
 from BaseUtil import ssh_cmd
 import BaseDatetime
@@ -85,7 +86,7 @@ class AWSResourceManager(ResourceManager) :
 		"""
 		msg( "... starting EC2 instance " + instance_id + " ..." )
 		self.connection.start_instances(instance_ids=[instance_id])
-		self.wait_for_instance(instance_id, "running")
+		return self.wait_for_instance(instance_id, "running")
 
 	def stop_instance(self, instance_id):
 		"""
@@ -101,16 +102,18 @@ class AWSResourceManager(ResourceManager) :
 		"""
 		msg( "... waiting EC2 instance " + instance_id + " to be in " + state + " state ..." )
 		reached = False
+		instance = None
 		while not reached:
 			insts = self.connection.get_all_instances([instance_id])
 			for res in insts :
-				inst = res.instances[0]
-				msg( "... current state: " + inst.state )
-				if inst.state == state :
+				instance = res.instances[0]
+				debug_msg( "... current state: " + instance.state )
+				if instance.state == state :
 					reached = True
 					break
 			if not reached:
 				BaseDatetime.sleep(10)
+		return instance
 
 	def terminate_instance(self, instance_id):
 		"""
@@ -183,11 +186,11 @@ def add_sudoer( ssh_cmdStr, host, sudo_user, remove_user = False, root_services=
     msg("Installing the '" + sudo_user + "' user on host '" + host + "' ..." )
     dotSSHDir = "/home/" + sudo_user + "/.ssh"
 
-    ssh_cmd( ssh_cmdStr, "adduser " + sudo_user, sudo=True  )
+    ssh_cmd( ssh_cmdStr, "useradd " + sudo_user, sudo=True  )
     msg("\t==> user added" )
 
     ### Construct the sudoer filer
-   
+  
     sudoFile = "/tmp/" + sudo_user
     ssh_cmd( ssh_cmdStr, "cp /dev/null " + sudoFile, sudo=True  )
     ssh_cmd( ssh_cmdStr, "chmod 666 " + sudoFile, sudo=True )
