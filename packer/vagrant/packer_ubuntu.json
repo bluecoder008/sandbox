@@ -54,6 +54,11 @@
       ]
     }
   ],
-  "post-processors": ["vagrant"]
+  "post-processors": [
+	{
+		"output": "packer_ubuntu_virtualbox.box",
+		"type": "vagrant"
+	}
+	]
 }
 
