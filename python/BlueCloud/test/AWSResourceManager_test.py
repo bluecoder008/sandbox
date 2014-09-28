@@ -4,10 +4,14 @@ import sys
 import unittest
 from AWS import AWSResourceManager
 from BaseUtil import msg
+from BaseUtil import set_debug
+
+aws_id = 'i-ba73ff54'
 
 class AWSResourceManager_test(unittest.TestCase):
 	
     def setUp(self):
+	set_debug(True)
 	self.mgr = AWSResourceManager('us-east-1') # east coast
 
     def tearDown(self):
@@ -23,11 +27,11 @@ class AWSResourceManager_test(unittest.TestCase):
 			msg("\tinst: <null>")
 
     def test_stop_instance(self):
-	self.mgr.stop_instance("i-5b4ff1b5")
+	self.mgr.stop_instance(aws_id)
 	pass
 
     def test_start_instance(self):
-	self.mgr.start_instance("i-5b4ff1b5")
+	self.mgr.start_instance(aws_id)
 	pass
 
     def test_get_instance_list_key_name(self):
