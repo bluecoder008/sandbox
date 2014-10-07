@@ -22,7 +22,7 @@ SVN_PASS=`grep svn_password $HOME/.boto | awk '{ print $3 } '`
 CMD=$(echo sed -e 's#\{\{ThePassword\}\}#'$SVN_PASS'#' ./bbs-box-prov.shf '>' tmp/bbs_box_prov.sh )
 bash -c "$CMD"
 
-ENV_DIR="./_env"
+ENV_DIR="$BS_HOME/_env"
 TARGET_DIR="$PROVIDER"
 CMD=$(echo cat $ENV_DIR/bootstrap/bootstrap_pkg.sh tmp/bbs_box_prov.sh  '>' $TARGET_DIR/packer_prov_$PROVIDER.sh)
 bash -c "$CMD"
@@ -55,7 +55,8 @@ if [ "$PROVIDER" = "vagrant" ]; then
 		#vagrant box remove vagrant_ubuntu || true
  	    vagrant box add -f vagrant_ubuntu packer_ubuntu_virtualbox.box
    elif [ "$VM_TYPE" = "centos" ]; then
-		cd vagrant && packer build -only=virtualbox-iso -force packer_centos.json
+		#cd vagrant && PACKER_LOG=1 packer --debug build -only=virtualbox-iso -force packer_centos.json
+		cd vagrant && packer build -force -only=virtualbox-iso packer_centos.json
 		#vagrant box remove vagrant_centos || true
    		vagrant box add -f vagrant_centos packer_centos_virtualbox.box
 	fi
