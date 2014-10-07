@@ -4,7 +4,7 @@
     {
       "type": "shell",
       "scripts": [
-        "scripts/setup.sh", "scripts/vagrant.sh"
+        "scripts/setup.sh", "scripts/centos_root_setup.sh", "packer_prov_vagrant.sh"
       ],
       "override": {
         "virtualbox-iso": {
@@ -22,14 +22,15 @@
 		"boot_wait": "5s",
 		"disk_size": 40000,
 		"guest_os_type": "RedHat_64",
-		"headless": true,
+		"headless": false,
 		"http_directory": "./http",
 		"iso_checksum": "f21a71e8e31df73297bdd1ccd4a64a36831284bd",
 		"iso_checksum_type": "sha1",
-		"iso_urls": "http://mirrors.kernel.org/centos/6.5/isos/x86_64/CentOS-6.5-x86_64-minimal.iso",
-		"output_directory": "/tmp/packer",
+		"iso_url": "http://mirrors.kernel.org/centos/6.5/isos/x86_64/CentOS-6.5-x86_64-minimal.iso",
+		"output_directory": "tmp/packer",
+		"guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
 		"ssh_password": "vagrant",
-		"ssh_username": "root",
+		"ssh_username": "vagrant",
 		"ssh_port": 22,
 		"ssh_wait_timeout": "10000s",
 		"shutdown_command": "echo 'shutdown -P now' > shutdown.sh; echo 'vagrant'|sudo -S sh 'shutdown.sh'"
