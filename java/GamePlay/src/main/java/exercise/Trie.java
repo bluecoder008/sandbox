@@ -14,13 +14,6 @@ public class Trie {
             children = new HashMap<Character, TrieNode>();
         }
 
-        /*public TrieNode(Character ch) {
-            this();
-            if (ch != null) {
-                data = ch;
-            }
-        }*/
-
         public TrieNode childNode(char ch) {
             TrieNode retNode = children.get(ch);
             if (retNode == null) {

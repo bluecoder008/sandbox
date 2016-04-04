@@ -13,12 +13,12 @@ public class Game {
     public Game() {
         machine = new MachinePlayer();
         human = new HumanPlayer();
-        players = new Player[2];
 
         // Trigger data loading from disk
         Dictionary.getInstance();
 
         // Randomly pick the first player
+        players = new Player[2];
         long currentMS = System.currentTimeMillis();
         if (currentMS % 2 == 0) {
             players[0] = machine;
@@ -50,6 +50,10 @@ public class Game {
             String response = currentPlayer.play(currentString);
             System.out.println("player[" + (n%2) + "]: " + response);
             if (CHALLENGE.equals(response)) {
+		if (currentString.isEmpty()) {
+			System.err.println("Player cannot challenge at first move.");
+			continue;
+		}
                 if (opponant.takeChallenge(currentString)) {
                     return opponant;
                 } else {
