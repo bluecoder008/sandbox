@@ -1,0 +1,32 @@
+
+apply plugin: 'java'
+apply plugin: 'application'  
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.1' 
+}
+
+task help << {
+    println "To build:\n\tgradle compileJava"
+    println "To run:\n\tgradle run -Pmyargs=3"
+}
+
+mainClassName = "PrintNumbersByBits"
+run {
+  if(project.hasProperty('myargs')){
+        args(myargs.split(','))
+   }
+}
+
+sourceSets {
+  main {
+    java {
+      // exclude 'some/unwanted/package/**'
+      srcDir '.'
+    }
+  }
+}
