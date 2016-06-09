@@ -27,44 +27,33 @@ class BSTLargestElemSmallerThan {
          root.right.left = new Node(7);
 
 	 BSTLargestElemSmallerThan obj = new BSTLargestElemSmallerThan();
-         obj.findLEST(root, 1);
-         Node result = obj.getResult();
+         Node result = obj.findLEST(root, 1);
 	 System.out.println("Result is: " + (result != null ? result.data : null) + " for S=1");
 
 	 obj = new BSTLargestElemSmallerThan();
-         obj.findLEST(root, 6);
-         result = obj.getResult();
+         result = obj.findLEST(root, 6);
 	 System.out.println("Result is: " + (result != null ? result.data : null) + " for S=6");
 
 	 obj = new BSTLargestElemSmallerThan();
-         obj.findLEST(root, 9);
-         result = obj.getResult();
+         result = obj.findLEST(root, 9);
 	 System.out.println("Result is: " + (result != null ? result.data : null) + " for S=9");
+
+	 obj = new BSTLargestElemSmallerThan();
+         result = obj.findLEST(root, 7);
+	 System.out.println("Result is: " + (result != null ? result.data : null) + " for S=7");
     }
 
-    Node result = null;
-
-    void findLEST(Node root, int S) {
-
+    Node findLEST(Node root, int S) {
         if ( root == null ) {
-            return;
+            return null;
         }
-
-        findLEST(root.right, S);
-
+	Node result = findLEST(root.right, S);
 	if ( result != null ) {
-            return;
+            return result;
 	}
-
         if ( root.data < S ) {
-            result = root;
-            return;
+            return root;
         }
-
-        findLEST(root.left, S);
-    }
-   
-    Node getResult() {
-        return result;
+        return findLEST(root.left, S);
     }
 }
