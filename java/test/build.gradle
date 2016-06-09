@@ -12,11 +12,12 @@ dependencies {
 
 task help << {
     println "To build:\n\tgradle compileJava"
-    println "To run:\n\tgradle run -Pmyargs=3 -PmainClassName='Permutation'"
+    println "To run:\n\tgradle run -Pmyargs=3 (remember to add 'mainClassName' in build.gradle)"
 }
 
-mainClassName = "Permutation"
+mainClassName = "FindSumSubArray"
 run {
+  standardInput = System.in
   if(project.hasProperty('myargs')){
         args(myargs.split(','))
    }
