@@ -15,7 +15,7 @@ task help << {
     println "To run:\n\tgradle run -Pmyargs=3 (remember to add 'mainClassName' in build.gradle)"
 }
 
-mainClassName = "FindSumSubArray"
+mainClassName = "BSTLargestElemSmallerThan"
 run {
   standardInput = System.in
   if(project.hasProperty('myargs')){
