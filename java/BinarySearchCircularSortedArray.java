@@ -1,4 +1,4 @@
-
+import java.util.Arrays;
 class BinarySearchCircularSortedArray {
 
     public static void main(String[] args) {     
@@ -29,14 +29,12 @@ class BinarySearchCircularSortedArray {
 
 	while ( lo < hi ) {
 		
-		if ( A[lo] == key ) {
-			return lo;
-		}
-		
-		if ( A[hi] == key ) {
-			return hi;
-		}
 		int mid = lo + hi >>> 1;
+		for(Integer a : Arrays.asList(lo, hi, mid)) {
+			if ( A[a] == key ) {
+				return a;
+			}
+		}
 
 		if ( A[lo] < A[mid] ) { // Use the first half to check
 			if ( A[lo] < key && key < A[mid] ) {
