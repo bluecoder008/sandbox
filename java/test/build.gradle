@@ -15,9 +15,11 @@ task help << {
     println "To run:\n\tgradle run -Pmyargs=3 (remember to add 'mainClassName' in build.gradle)"
 }
 
-mainClassName = "FindNumberOccurence"
+//mainClassName = "FindNumberOccurence"
+mainClassName = "BinarySearchCircularSortedArray"
 run {
-  standardInput = System.in
+  //standardInput = System.in
+  standardInput = System.console()
   if(project.hasProperty('myargs')){
         args(myargs.split(','))
    }
