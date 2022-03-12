@@ -1,14 +1,6 @@
 #!/usr/bin/env python3
-from APIClient import APIClient
-from BaseFile import File
 from BaseUtil import (debug_msg, msg, get_module_name, parse_cmd_opts,
                       pretty_json_dumps, set_debug)
-from clippership.Clipper import Clipper
-import json
-import os
-import subprocess
-import sys
-import time
 
 
 class NumericPalindrome(object):
@@ -31,7 +23,7 @@ class NumericPalindrome(object):
             if left != right:
                 return False
 
-            # string the digits on both ends
+            # strip off the digits on both ends
             m = m / 100
             x = (x // 10) % m
 
