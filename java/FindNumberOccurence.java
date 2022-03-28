@@ -1,8 +1,10 @@
 /**
 
     Given a sorted array, find a way to find the # of occurrence of a number 
-for eg: [1, 1, 2, 3, 3, 3, 4, 5] 
-find # of occurrence of 3 in time better than O(n)
+    for eg: [1, 1, 2, 3, 3, 3, 4, 5] X=3 -> 3
+            [1, 1] X=1 -> 2
+            [1, 1, 2, 2, 3, 3] X=2 -> 2
+   find # of occurrence of 3 in time better than O(n)
 
 */
 
@@ -34,10 +36,10 @@ class FindNumberOccurence {
 
 	//System.out.println("before check, ret=" + ret);
 	if ( t == s + 1 ) {
-		if ( ret.left > -1 ) {
+		if ( ret.left > -1 && ret.right == -1 ) {
 			ret.right = ret.left;
 		}
-		if ( ret.right > -1 ) {
+		if ( ret.right > -1 && ret.left == -1 ) {
 			ret.left = ret.right;
 		}
 		//System.out.println("returning: " + ret);
@@ -56,7 +58,7 @@ class FindNumberOccurence {
 		if ( ret1.right > -1 ) {
 			ret.right = ret1.right;
 		}
-	}
+	} 
 
 	if ( A[mid] <= X ) {
                 ret2 = findInterval(A, mid, t, X);
