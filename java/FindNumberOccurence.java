@@ -33,7 +33,7 @@ class FindNumberOccurence {
 	}
 
 	//System.out.println("before check, ret=" + ret);
-	if ( t <= s + 1 ) {
+	if ( t == s + 1 ) {
 		if ( ret.left > -1 ) {
 			ret.right = ret.left;
 		}
@@ -82,7 +82,11 @@ class FindNumberOccurence {
 	int X = Integer.parseInt(args[A.length]);
 
 	Interval interval = findInterval(A, 0, A.length-1, X);
-	//System.out.println("returned interval: " + interval);
-	System.out.println("occurance of " + X + " is: " + (interval.right - interval.left + 1 ) );
+	System.out.println("returned interval: " + interval);
+        int occurance = 0;
+        if (interval.left != -1 && interval.right != -1) {
+            occurance = interval.right - interval.left + 1;
+        }
+	System.out.println("occurance of " + X + " is: " + occurance );
     }
 }
