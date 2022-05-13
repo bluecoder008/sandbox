@@ -7,11 +7,11 @@ data = """
 
 def sort_by_col(col):
     dlist = data.split()
-    def key_lambda(str):
-        slist=str.split(",")
-        return slist[col]
+#    def key_lambda(str):
+#        slist=str.split(",")
+#        return slist[col]
     results = sorted(dlist,
-                     key=key_lambda)
+                     key=lambda x: x.split(",")[col])
     return results
 
 def test_driver(col):
